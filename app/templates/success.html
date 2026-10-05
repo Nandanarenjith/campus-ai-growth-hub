@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>You're Registered | AI Builder Challenge</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', path='css/style.css') }}"
+    >
+
+    <style>
+
+        .success-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            background: #0b0a10;
+        }
+
+        .success-card {
+            width: 100%;
+            max-width: 720px;
+            text-align: center;
+            padding: 50px 40px;
+            border: 1px solid #2b2345;
+            border-radius: 24px;
+            background: #11101a;
+            box-sizing: border-box;
+        }
+
+        .success-icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+
+        .success-card h1 {
+            margin: 0 0 15px;
+            color: #ffffff;
+            font-size: 42px;
+            line-height: 1.15;
+        }
+
+        .success-card > p {
+            color: #b9b5c9;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .referral-box {
+            margin-top: 30px;
+            padding: 28px;
+            border-radius: 18px;
+            background: #18152a;
+            border: 1px solid #302947;
+        }
+
+        .referral-box p {
+            color: #b9b5c9;
+            line-height: 1.5;
+        }
+
+        .referral-code {
+            font-size: 32px;
+            font-weight: 800;
+            color: #9b6cff;
+            letter-spacing: 4px;
+            margin: 15px 0;
+        }
+
+        .referral-link {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 14px;
+            border-radius: 10px;
+            border: 1px solid #39314f;
+            background: #0b0a10;
+            color: #ffffff;
+            margin: 10px 0 15px;
+            font-size: 14px;
+        }
+
+        .share-button {
+            display: inline-block;
+            padding: 14px 24px;
+            border-radius: 10px;
+            background: #8b5cf6;
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .share-button:hover {
+            opacity: 0.9;
+        }
+
+        .referral-stats {
+            display: flex;
+            justify-content: center;
+            margin-top: 25px;
+        }
+
+        .referral-stat {
+            padding: 18px 35px;
+            border-radius: 14px;
+            background: #100d1c;
+            border: 1px solid #302947;
+        }
+
+        .referral-stat strong {
+            display: block;
+            color: #ffffff;
+            font-size: 32px;
+        }
+
+        .referral-stat span {
+            color: #8f899f;
+            font-size: 14px;
+        }
+
+        .back-home {
+            display: inline-block;
+            margin-top: 25px;
+            color: #a78bfa;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        @media (max-width: 600px) {
+
+            .success-card {
+                padding: 35px 22px;
+            }
+
+            .success-card h1 {
+                font-size: 32px;
+            }
+
+            .referral-box {
+                padding: 22px 16px;
+            }
+
+            .referral-code {
+                font-size: 26px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="success-page">
+
+    <div class="success-card">
+
+        <div class="success-icon">
+            🎉
+        </div>
+
+
+        <h1>
+            You're In, {{ student["name"] }}!
+        </h1>
+
+
+        <p>
+            Your seat for the free AI workshop has been registered.
+        </p>
+
+
+        <div class="referral-box">
+
+            <p>
+                Your personal referral code
+            </p>
+
+
+            <div class="referral-code">
+                {{ student["referral_code"] }}
+            </div>
+
+
+            <p>
+                Invite your friends and help them join the workshop.
+            </p>
+
+
+            <input
+                class="referral-link"
+                value="{{ referral_link }}"
+                readonly
+                onclick="this.select()"
+            >
+
+
+            <a
+                class="share-button"
+                href="https://wa.me/?text=I'm%20joining%20a%20free%20AI%20workshop%20where%20we'll%20build%20an%20AI%20Career%20Assistant%20in%2060%20minutes.%20Join%20me:%20{{ referral_link | urlencode }}"
+                target="_blank"
+            >
+                Share on WhatsApp →
+            </a>
+
+
+            <div class="referral-stats">
+
+                <div class="referral-stat">
+
+                    <strong>
+                        {{ referral_count }}
+                    </strong>
+
+                    <span>
+                        Friends Registered
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <a
+            href="/"
+            class="back-home"
+        >
+            ← Back to workshop
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
