@@ -178,22 +178,53 @@ def register(
 # ============================================================
 # SUCCESS PAGE
 # ============================================================
-
 @app.get("/success")
 def success(request: Request):
 
     code = request.query_params.get("code", "")
     existing = request.query_params.get("existing", "")
 
+    student = None
+    referral_link = ""
+    referral_count = 0
+
+    if code:
+        conn = get_connection()
+
+        student = conn.execute(
+            """
+            SELECT *
+            FROM students
+            WHERE referral_code = ?
+            """,
+            (code,)
+        ).fetchone()
+
+        referral_count = conn.execute(
+            """
+            SELECT COUNT(*)
+            FROM students
+            WHERE referred_by = ?
+            """,
+            (code,)
+        ).fetchone()[0]
+
+        conn.close()
+
+        if student:
+            referral_link = f"{str(request.base_url).rstrip('/')}/?ref={code}"
+
     return templates.TemplateResponse(
         request=request,
         name="success.html",
         context={
             "code": code,
-            "existing": existing
+            "existing": existing,
+            "student": student,
+            "referral_link": referral_link,
+            "referral_count": referral_count
         }
     )
-
 
 # ============================================================
 # HEALTH CHECK
